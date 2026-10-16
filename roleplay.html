@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="3yKrXkFF0nmHamQCriDqBh">
+<head data-page-node-id="sqqvvhpptOdom9nOY03oHP">
+<meta charset="UTF-8" data-page-node-id="6mFAJkooH7nEZB5ayt6lrE">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" data-page-node-id="RUgefIPDPmIN4derNmwYmh">
+<meta name="apple-mobile-web-app-capable" content="yes" data-page-node-id="Atf2ThiVElZRhXLdCKvbCh">
+<meta name="mobile-web-app-capable" content="yes" data-page-node-id="SUSzCWjk15Cr2QuY7D8jjY">
+<meta name="theme-color" content="#FFB7B2" data-page-node-id="LFKzZ5LUH5ZFQ3fOEflMvI">
+<title>开口说英语</title>
+<link rel="manifest" href="manifest.json" data-page-node-id="Q3JPrMpDsN3GWji4PfQRC3">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg" data-page-node-id="BT78g3FhEwMgF11RWiEYy0">
+<link rel="apple-touch-icon" href="assets/icon.svg" data-page-node-id="8mQrqxJ1YCOt6wkUSjRgAE">
+<link rel="stylesheet" href="style.css" data-page-node-id="MWPrlslC7b6CajXf37DUKX">
+</head>
+<body data-page-node-id="4TvpbtknBQ47oHO2lcfi1J">
+
+<div id="app" data-page-node-id="Svy0YYgFJDXQQEcXKz8tVe">
+
+  <!-- ============ 首页：选主题 ============ -->
+  <section class="screen active" id="screen-home" data-page-node-id="SN3wX3LUOaMWVFOxneFu09">
+    <header class="home-header" data-page-node-id="a382jW8VoRebsWDAYSJsUY">
+      <div class="mascot" data-page-node-id="YeaxeLcGTJNKR1sng6RQSd">🦉</div>
+      <h1 data-page-node-id="Jn5VUSVtm2ndTYLMsmAnsG">开口说英语</h1>
+      <p class="subtitle" data-page-node-id="EgEIWLFcHtEAYiVMHr6Bie">选个角色，一起说话吧</p>
+      <div class="star-bar" data-page-node-id="vfj6bKNT3q0AK0S6csG2j9">
+        <span class="star-icon" data-page-node-id="2L7CZWUFVqvUZ94TFxEydj">⭐</span>
+        <span id="total-stars" data-page-node-id="u9bZbHZ9I177hOPsWnMkCu">0</span>
+        <span class="star-label" data-page-node-id="EE5HP64QJnwQdR9cS0MRGk">颗星星</span>
+      </div>
+    </header>
+
+    <div class="unit-grid" id="unit-grid" data-page-node-id="ZqZCk73Imrcd2uNikHcPm8"></div>
+
+    <!-- 语音提示：检测到缺少英文语音包时显示给家长 -->
+    <div class="voice-tip" id="voice-tip" hidden data-page-node-id="voiceTipBlock">
+      <span class="vt-emoji">🔇</span>
+      <div class="vt-body">
+        <div class="vt-title">听不到英语朗读？</div>
+        <div class="vt-text">这台电脑还没有安装"英文语音包"（Windows 免费组件）。请打开 设置 → 时间和语言 → 语言和区域 → 添加语言 → English (United States)，在选项里勾选"语音"下载；装好后重启浏览器即可恢复朗读。</div>
+      </div>
+      <button class="vt-close" id="voice-tip-close" type="button" aria-label="关闭提示">×</button>
+    </div>
+
+    <footer class="home-footer" data-page-node-id="UFVwe8ZcOa3Ow0IlTD6Jxp">
+      <button class="mini-btn" id="btn-reset" data-page-node-id="opM166xhfuFu2JEw3FrtHz">重来一次</button>
+    </footer>
+  </section>
+
+  <!-- ============ 漫画对话（先看一遍） ============ -->
+  <section class="screen" id="screen-dialogue" data-page-node-id="3EENwaOU4UKA7yHAaIjemc">
+    <header class="top-bar on-scene" data-page-node-id="OSdlvTVQhvFtKAuR5vSZHU">
+      <button class="back-btn" data-back data-page-node-id="SksBR9IAFv89xIaH6wMxH6">←</button>
+      <span class="top-title" id="dlg-title" data-page-node-id="2g4rhK2CL6ENFWABo4p4t4">漫画对话</span>
+    </header>
+
+    <div class="comic-stage" id="comic-stage" data-page-node-id="0C9c3JMv9v11ZKh1LFHh07">
+      <div class="scene-bg" id="scene-bg-dialogue" data-page-node-id="JYD3rfSAxG5pmkg8TR75Nr"></div>
+      <!-- 漫画格：场景 + 角色 + 气泡 -->
+      <div class="comic-panel" data-page-node-id="1kNv1JIVcnLcV7aJYXOm1t">
+        <div class="comic-actors" id="comic-actors" data-page-node-id="B8BEkLTWXFIhTWLi9BDrmk"></div>
+        <div class="comic-bubble" id="comic-bubble" data-page-node-id="Vic8nUheIzABwvA4ByYfZS">
+          <div class="cb-who" id="cb-who" data-page-node-id="I7O0JU96YkdGjpfU3XdDYU">Lily</div>
+          <div class="cb-en" id="cb-en" data-page-node-id="wcHQkINGFGPbalHDOfQXtZ">Good morning!</div>
+          <div class="cb-zh" id="cb-zh" data-page-node-id="mIhmpDHKmPkvZJEM7ue3KK">早上好！</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bottom-bar" data-page-node-id="2rhCe9AoocowxDtgzHos58">
+      <button class="big-btn play-btn" id="btn-play-dialogue" data-page-node-id="TpXZZ2nxfBbuYJi6ycIvXQ">▶ 再听一遍</button>
+      <button class="big-btn next-btn" id="btn-to-practice" data-page-node-id="5UsRXHBTx2bdVTAJcNPlYm">扮演角色 →</button>
+    </footer>
+  </section>
+
+  <!-- ============ 选角色 ============ -->
+  <section class="screen" id="screen-cast" data-page-node-id="iBqqCpQPzDfohbxEe869Sd">
+    <header class="top-bar" data-page-node-id="aS9Ky5gDqgRXE4yvo8by92">
+      <button class="back-btn" data-back data-page-node-id="6nZ4ng6mFsTk5zmDEkBYiT">←</button>
+      <span class="top-title" data-page-node-id="oeaG5iZ2DzmySZ9LP90GYO">你想演谁？</span>
+    </header>
+
+    <div class="cast-stage" data-page-node-id="6E7BNeUmLsJVIAFJNGaGgH">
+      <p class="cast-tip" data-page-node-id="PQLt6wR9EpC1ZQogmcFL1K">选一个角色，轮到你的时候你就说出这句话 👇</p>
+      <div class="cast-list" id="cast-list" data-page-node-id="Iq82d4BJvz7smGIWPRtCYn"></div>
+    </div>
+  </section>
+
+  <!-- ============ 对话练习（核心） ============ -->
+  <section class="screen" id="screen-roleplay" data-page-node-id="ZQ4FGeWvfT4Q7fWruFbxtT">
+    <header class="top-bar on-scene" data-page-node-id="B8Pvysye0pfWJZgvnoHrOu">
+      <button class="back-btn" id="btn-exit-roleplay" data-page-node-id="1BX1qrS7THFQqKBl2nv7Nb">←</button>
+      <div class="progress-wrap" data-page-node-id="VfRoERZ3qTGnflD34xAwPV">
+        <div class="progress-bar" data-page-node-id="W71ed9qXMQFzDsT0Y2Z9GN"><div class="progress-fill" id="progress-fill" data-page-node-id="3wiWAOENiobzSQP9JLfjfZ"></div></div>
+        <span class="progress-text" id="progress-text" data-page-node-id="SmOD46dWFTbo8yUTfYAyyY">1 / 4</span>
+      </div>
+    </header>
+
+    <div class="comic-stage rp-stage" id="rp-stage" data-page-node-id="SoRNCe5dlo0QMQ5yB5AAK8">
+      <div class="scene-bg" id="scene-bg-rp" data-page-node-id="6pAxWhBR5wECwpao3tDHgk"></div>
+
+      <!-- 对方说话 -->
+      <div class="comic-panel other-panel" id="scene-other" data-page-node-id="sPQeH77veNitCD4EuftpE6">
+        <div class="rp-actor" id="other-actor" data-page-node-id="L0HyCmmJOsa85aH0iR4vxf">
+          <span class="ask-badge">?</span>
+          <img id="other-img" src="" alt="" data-page-node-id="PfPPKbhvIMHEDT1HhqEgOU">
+        </div>
+        <div class="comic-bubble bubble-left" id="other-bubble" data-page-node-id="T70HfIcXXL6jDWw0BLgCau">
+          <div class="cb-who" id="other-who" data-page-node-id="OUFtBUipjHtJgHOmmvQO85">Tom</div>
+          <div class="cb-en" id="other-en" data-page-node-id="A9FnOBXINPNIqoBL0jAshC">Good morning!</div>
+          <div class="cb-zh" id="other-zh" data-page-node-id="gBLoHvJr6TqWEvQjpuDgjf">早上好！</div>
+        </div>
+      </div>
+
+      <!-- 轮到孩子 -->
+      <div class="my-turn-card" id="my-turn-card" data-page-node-id="iVbDhPNQw0UFTCEw26kLG1">
+        <div class="turn-flag" id="turn-flag" data-page-node-id="Gd6kn0wzhifEWiF6UAt4NJ">轮到你说了！</div>
+        <div class="my-row" data-page-node-id="xgQVbl08BT7Eidabq2LHAw">
+          <div class="rp-actor my-actor" id="my-actor"><span class="ask-badge">?</span><img id="my-img" src="" alt="" data-page-node-id="X9hY2r6Yi3dHr0ctDgmPIp"></div>
+          <div class="my-body" data-page-node-id="x0L9aXiiSsRbfU8ziP2JYP">
+            <div class="my-zh" id="my-zh" data-page-node-id="OXcSCzYm5MTaEuiszNDX6g">早上好！</div>
+            <div class="my-hint" id="my-hint" data-page-node-id="bkjMUTsZIhUry20IqbiezF">先自己说一遍 👄</div>
+            <div class="my-answer" id="my-answer" data-page-node-id="c2GTMyhqFmBOfWaLWNWzna"><span id="my-en" data-page-node-id="ObRayOVxkuzd2djoPdNQem">Good morning!</span></div>
+          </div>
+        </div>
+        <button class="reveal-btn" id="btn-reveal" data-page-node-id="IL1LSRRbK7FrTPUDzuuJ0z">点我看答案 🔊</button>
+      </div>
+    </div>
+
+    <footer class="bottom-bar" id="roleplay-actions" data-page-node-id="ZHqfI38kMnBrVwpiGdyzgw">
+      <button class="big-btn say-btn" id="btn-said" data-page-node-id="7qiEaLundADYG0YtHADALQ">我说对了 ✅</button>
+      <button class="big-btn skip-btn" id="btn-notyet" data-page-node-id="GrTFSW6iMyUU2hkML0CVbl">再听一遍 🔁</button>
+    </footer>
+  </section>
+
+  <!-- ============ 结算 ============ -->
+  <section class="screen" id="screen-finish" data-page-node-id="vH6zSSVsvYfJNrZxvQG0se">
+    <div class="finish-box" data-page-node-id="Y5cIMo34hWBoUXpDqwzNTQ">
+      <div class="finish-emoji" id="finish-emoji" data-page-node-id="pGAmhmV8BAFEpQ4Cr8IYyO">🎉</div>
+      <h2 id="finish-title" data-page-node-id="Mt8lDZtNknpAuamVwTGH2k">演得真好！</h2>
+      <div class="finish-role" id="finish-role" data-page-node-id="D0b0K7W0Sjs1kqvRqMkC6Z">你扮演的是 👧 Lily</div>
+      <div class="finish-score" data-page-node-id="2xxBprtMk47R4iFGFStqbc">
+        <span id="finish-stars" data-page-node-id="Mcp9KmlDExMxdDBGC8d9hi">0</span> 颗星星
+      </div>
+      <p class="finish-detail" id="finish-detail" data-page-node-id="OrDbgCwKHNjCvoWJBc4o9u">这段对话演完啦</p>
+      <div class="finish-btns" data-page-node-id="xUWuAp6ABPx8wBHPzdFMC8">
+        <button class="big-btn play-btn" id="btn-swap" data-page-node-id="5uLmfRGjRXqMEGH9uLR50F">换个角色演</button>
+        <button class="big-btn next-btn" id="btn-home" data-page-node-id="TDQbEXcWwN6LsfV6bUjX3S">回到首页</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="data-lessons.js"></script>
+<script src="new-units.js"></script>
+<script src="scenes.js"></script>
+<script src="chars.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>森林小镇大冒险</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  :root{
+    --pink:#FFB7B2; --mint:#A8E6CF; --sky:#B5D8EB; --cream:#FFF7E8; --ink:#5b4636;
+  }
+  html,body{ height:100%; }
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Comic Sans MS",sans-serif;
+    background:linear-gradient(160deg,#FFF7E8,#FFE9E3 60%,#E8F6EE);
+    color:var(--ink); overflow:hidden; user-select:none;
+  }
+  #app{ height:100dvh; display:flex; flex-direction:column; max-width:1320px; margin:0 auto; }
+
+  /* ---------- 首页 ---------- */
+  .home{ padding:18px 16px 28px; overflow-y:auto; }
+  .home h1{ font-size:26px; text-align:center; color:#E58A7D; margin:6px 0 2px; letter-spacing:1px; }
+  .home .sub{ text-align:center; color:#9a8a7a; font-size:14px; margin-bottom:16px; }
+  .chapter{ background:#fff; border-radius:22px; padding:14px 14px 16px; margin-bottom:16px;
+            box-shadow:0 6px 18px rgba(180,140,120,.18); }
+  .chapter .ch-head{ display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .chapter .ch-ico{ font-size:30px; }
+  .chapter .ch-title{ font-size:18px; font-weight:700; }
+  .chapter .ch-count{ margin-left:auto; font-size:13px; color:#b0a090; }
+  .eps{ display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:10px; }
+  .ep-card{ background:var(--cream); border-radius:16px; padding:10px; text-align:center; cursor:pointer;
+            border:2px solid transparent; transition:.15s; position:relative; }
+  .ep-card:active{ transform:scale(.96); }
+  .ep-card .ep-ico{ font-size:24px; }
+  .ep-card .ep-name{ font-size:12.5px; margin-top:4px; line-height:1.25; color:#6b5a48; }
+  .ep-card .ep-star{ position:absolute; top:6px; right:8px; font-size:14px; }
+  .ep-card.done{ border-color:#FFD27A; background:#FFF6E0; }
+
+  /* ---------- 播放页 ---------- */
+  .player{ flex:1; display:none; flex-direction:column; min-height:0; }
+  .player.on{ display:flex; }
+  .topbar{ display:flex; align-items:center; gap:8px; padding:8px 12px 4px; flex-shrink:0; }
+  .back{ font-size:22px; cursor:pointer; background:#fff; border-radius:50%; width:38px; height:38px;
+         display:flex; align-items:center; justify-content:center; box-shadow:0 3px 8px rgba(0,0,0,.1); }
+  .ep-label{ font-size:16px; font-weight:700; }
+
+  /* 三栏：旁白(左) | 图(中) | 交互(右) */
+  .main3{ flex:1; display:flex; gap:8px; padding:2px 8px 8px; min-height:0; }
+  .side{ flex-shrink:0; display:flex; flex-direction:column; gap:8px; overflow-y:auto; }
+  .narr-side{ width:182px; }
+  .rp-side{ width:182px; }
+
+  /* 左栏：旁白 */
+  .narr-box{ background:#fff; border-radius:16px; padding:12px; box-shadow:0 3px 10px rgba(0,0,0,.06); }
+  .narr-tag{ display:inline-block; background:#FFD27A; color:#fff; font-size:11px;
+             padding:1px 9px; border-radius:9px; margin-bottom:6px; }
+  .narr-text{ font-size:13.5px; line-height:1.6; color:#6b5a48; }
+  .narr-skip{ display:block; width:100%; margin-top:10px; background:var(--mint); color:#2c6b50;
+              border:none; border-radius:12px; padding:9px; font-size:13.5px; font-weight:700; cursor:pointer; }
+  .narr-skip:active{ transform:scale(.97); }
+
+  /* 中栏：舞台 */
+  .stage-wrap{ flex:1; min-width:0; display:flex; align-items:center; justify-content:center; }
+  .stage{ position:relative; border-radius:22px; overflow:hidden; background:#e6f3ea;
+          box-shadow:inset 0 0 0 3px #fff, 0 8px 22px rgba(150,120,100,.25); }
+  .stage img.scene{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#e6f3ea; }
+  .bubble{ position:absolute; transform:translate(-50%,-100%) scale(.4); opacity:0;
+           transition:transform .32s cubic-bezier(.34,1.56,.64,1), opacity .32s;
+           max-width:58%; z-index:3; }
+  .bubble.show{ opacity:1; transform:translate(-50%,-100%) scale(1); }
+  .bubble .b-main{ background:#fff; border-radius:18px; padding:9px 13px; box-shadow:0 5px 14px rgba(0,0,0,.18); position:relative; }
+  .bubble .b-main:after{ content:""; position:absolute; bottom:-9px; left:50%; transform:translateX(-50%);
+           border:10px solid transparent; border-top-color:#fff; border-bottom:0; }
+  .bubble .en{ font-size:16px; font-weight:700; color:#4a3a2c; line-height:1.2; }
+  .bubble .zh{ font-size:12px; color:#9a8a7a; margin-top:2px; }
+  .bubble .who-row{ display:flex; align-items:center; gap:5px; margin-bottom:4px; }
+  .bubble .ava{ width:24px; height:24px; border-radius:50%; object-fit:cover; background:#eee; }
+  .bubble .who{ font-size:12px; font-weight:700; color:#E58A7D; }
+
+  /* 右栏：交互 */
+  .rp-btn{ width:100%; border:none; border-radius:14px; padding:11px 8px; font-size:14px; font-weight:700;
+           cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,.1); }
+  .rp-btn:active{ transform:scale(.97); }
+  .rp-btn.cast{ background:#FFD27A; color:#7a5b12; }
+  .rp-btn.replay{ background:#fff; color:#6b5a48; }
+  .linepanel{ background:#fff; border-radius:14px; padding:8px 10px; text-align:center; box-shadow:0 3px 8px rgba(0,0,0,.06); }
+  .linepanel .lp-en{ font-size:16px; font-weight:800; color:#3f3225; }
+  .linepanel .lp-zh{ font-size:12.5px; color:#8a7a6a; margin-top:2px; }
+  .progress{ display:flex; gap:5px; justify-content:center; padding:2px 0; }
+  .progress .dot{ width:8px; height:8px; border-radius:50%; background:#e3d8cc; }
+  .progress .dot.on{ background:#FFB74D; }
+  .controls{ display:flex; align-items:center; justify-content:center; gap:10px; }
+  .ctrl{ background:#fff; border:none; border-radius:50%; width:44px; height:44px; font-size:20px; cursor:pointer;
+         box-shadow:0 4px 10px rgba(0,0,0,.12); display:flex; align-items:center; justify-content:center; }
+  .ctrl:active{ transform:scale(.92); }
+  .ctrl.play{ width:54px; height:54px; font-size:24px; background:var(--mint); }
+  .auto-toggle{ font-size:12px; color:#9a8a7a; text-align:center; }
+
+  /* 右栏：轮到我卡片 */
+  .my-card{ background:#fff; border-radius:16px; padding:12px; box-shadow:0 5px 14px rgba(0,0,0,.12);
+            display:none; flex-direction:column; gap:8px; }
+  .my-card.on{ display:flex; }
+  .my-card .mc-flag{ font-size:14px; font-weight:800; color:#E58A7D; text-align:center; }
+  .my-card .mc-row{ display:flex; align-items:center; gap:8px; }
+  .my-card .mc-img{ width:48px; height:48px; border-radius:50%; object-fit:cover; background:#f3ede4; flex-shrink:0; }
+  .my-card .mc-body{ flex:1; min-width:0; }
+  .my-card .mc-zh{ font-size:15px; font-weight:700; color:#3f3225; }
+  .my-card .mc-hint{ font-size:11.5px; color:#9a8a7a; margin-top:2px; }
+  .my-card .mc-answer{ margin-top:4px; display:none; }
+  .my-card .mc-answer.revealed{ display:block; }
+  .my-card .mc-answer span{ font-size:15px; font-weight:700; color:#2c6b50; }
+  .my-card .mc-actions{ display:flex; flex-direction:column; gap:6px; }
+  .my-card .mc-btn{ width:100%; border:none; border-radius:12px; padding:10px 6px; font-size:13.5px; font-weight:700; cursor:pointer; }
+  .my-card .mc-btn.reveal{ background:#FFD27A; color:#7a5b12; }
+  .my-card .mc-btn.said{ background:var(--mint); color:#2c6b50; }
+  .my-card .mc-btn.again{ background:#eee; color:#6b5a48; }
+  .my-card .mc-btn:active{ transform:scale(.96); }
+
+  /* 选角色浮层（图上叠加） */
+  .cast-ov{ position:absolute; inset:0; background:rgba(255,247,232,.96); display:none; flex-direction:column;
+            align-items:center; justify-content:center; gap:14px; z-index:6; border-radius:22px; padding:16px; }
+  .cast-ov.on{ display:flex; }
+  .cast-ov .ct{ font-size:20px; font-weight:800; color:#E58A7D; }
+  .cast-list-v2{ display:flex; flex-wrap:wrap; gap:12px; justify-content:center; }
+  .cast-card-v2{ background:#fff; border-radius:18px; padding:12px 14px; text-align:center; cursor:pointer;
+                 box-shadow:0 5px 14px rgba(0,0,0,.12); border:3px solid transparent; transition:.15s; min-width:96px; }
+  .cast-card-v2:active{ transform:scale(.95); }
+  .cast-card-v2 img{ width:64px; height:64px; border-radius:50%; object-fit:cover; background:#f3ede4; }
+  .cast-card-v2 .cn{ font-size:15px; font-weight:700; margin-top:6px; color:#5b4636; }
+  .cast-card-v2 .cc{ font-size:12px; color:#b0a090; margin-top:2px; }
+
+  /* 阶段隐藏：旁白阶段隐藏右栏交互，角色扮演阶段隐藏播放控制 */
+  .player.narrating .rp-side .rp-btn,
+  .player.narrating .rp-side .linepanel,
+  .player.narrating .rp-side .progress,
+  .player.narrating .rp-side .controls,
+  .player.narrating .rp-side .auto-toggle{ display:none !important; }
+  .player.rp .rp-side .controls,
+  .player.rp .rp-side .auto-toggle{ display:none !important; }
+
+  /* 结算（图上叠加） */
+  .done-overlay{ position:absolute; inset:0; background:rgba(255,247,232,.94); display:none; flex-direction:column;
+                 align-items:center; justify-content:center; gap:14px; z-index:5; border-radius:22px; }
+  .done-overlay.on{ display:flex; }
+  .done-overlay .big{ font-size:64px; }
+  .done-overlay .t{ font-size:22px; font-weight:800; color:#E58A7D; }
+  .done-overlay .s{ font-size:15px; color:#8a7a6a; }
+  .done-overlay .btn{ background:var(--mint); color:#2c6b50; border:none; border-radius:14px; padding:11px 22px;
+                      font-size:16px; font-weight:700; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,.12); }
+
+  /* 窄屏适配：矮屏/横屏仍保留三栏，仅收窄侧栏 */
+  @media (max-width:720px){
+    .narr-side, .rp-side{ width:132px; }
+    .narr-text{ font-size:12.5px; }
+    .bubble .en{ font-size:15px; }
+    .bubble .zh{ font-size:11.5px; }
+  }
+
+  /* 手机竖屏：三栏改竖排——大图在上、旁白居中、交互在下，图片不再被侧栏挤小 */
+  @media (max-width:720px) and (min-height:560px){
+    .main3{ flex-direction:column; gap:6px; padding:2px 6px 8px; }
+    .stage-wrap{ order:1; width:100%; flex:1 1 auto; min-height:0; }
+    .narr-side{ order:2; width:100%; flex-shrink:0; }
+    .rp-side{ order:3; width:100%; flex-shrink:1; min-height:0; max-height:46dvh; overflow-y:auto; }
+    /* 旁白条压缩 */
+    .narr-box{ padding:10px 12px; }
+    .narr-text{ font-size:14px; line-height:1.5; }
+    .narr-skip{ padding:8px; margin-top:8px; }
+    /* 右栏改横铺：两个按钮一行，其余整行 */
+    .rp-side{ flex-direction:row; flex-wrap:wrap; align-items:center; gap:6px; }
+    .rp-btn{ flex:1 1 calc(50% - 3px); padding:10px 6px; font-size:13.5px; }
+    .linepanel{ flex:1 1 100%; }
+    .progress{ flex:1 1 100%; padding:0; }
+    .controls{ flex:1 1 auto; }
+    .auto-toggle{ flex:0 0 auto; }
+    .my-card{ flex:1 1 100%; padding:10px; gap:6px; }
+    .my-card .mc-img{ width:40px; height:40px; }
+    .my-card .mc-zh{ font-size:14px; }
+    .my-card .mc-actions{ flex-direction:row; }
+    .my-card .mc-btn{ padding:9px 4px; font-size:12.5px; }
+    /* 图上浮层收紧 */
+    .cast-ov{ gap:10px; padding:12px; }
+    .cast-ov .ct{ font-size:18px; }
+    .cast-card-v2{ min-width:84px; padding:10px; }
+    .cast-card-v2 img{ width:56px; height:56px; }
+    .done-overlay .big{ font-size:52px; }
+    .done-overlay .t{ font-size:19px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="home" id="home"></div>
+
+  <div class="player" id="player">
+    <div class="topbar">
+      <div class="back" id="backBtn">←</div>
+      <div class="ep-label" id="epLabel"></div>
+    </div>
+
+    <div class="main3">
+      <!-- 左：旁白 -->
+      <aside class="side narr-side">
+        <div class="narr-box">
+          <div class="narr-tag">📖 旁白</div>
+          <div class="narr-text" id="narrText"></div>
+          <button class="narr-skip" id="skipBtn">⏭ 跳过旁白，开始对话</button>
+        </div>
+      </aside>
+
+      <!-- 中：大场景图 -->
+      <div class="stage-wrap" id="stageWrap">
+        <div class="stage" id="stage">
+          <img class="scene" id="sceneImg" alt="">
+          <div class="bubble" id="bubble">
+            <div class="b-main">
+              <div class="who-row"><img class="ava" id="bAva" alt=""><span class="who" id="bWho"></span></div>
+              <div class="en" id="bEn"></div>
+              <div class="zh" id="bZh"></div>
+            </div>
+          </div>
+          <div class="cast-ov" id="castOv">
+            <div class="ct">你想演谁？</div>
+            <div class="cast-list-v2" id="castList"></div>
+          </div>
+          <div class="done-overlay" id="doneOv">
+            <div class="big">⭐</div>
+            <div class="t">这一集看完啦！</div>
+            <div class="s" id="doneStars"></div>
+            <button class="btn" id="doneHome">回到首页</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右：交互（常驻，不用等对话读完） -->
+      <aside class="side rp-side">
+        <button class="rp-btn cast" id="btnCast">🎭 选角色演</button>
+        <button class="rp-btn replay" id="btnReplay">🔁 重听本句</button>
+
+        <div class="linepanel" id="linePanel">
+          <div class="lp-en" id="lpEn"></div>
+          <div class="lp-zh" id="lpZh"></div>
+        </div>
+
+        <div class="progress" id="progress"></div>
+
+        <div class="controls">
+          <button class="ctrl" id="prevBtn">⏮</button>
+          <button class="ctrl play" id="playBtn">⏸</button>
+          <button class="ctrl" id="nextBtn">⏭</button>
+        </div>
+        <div class="auto-toggle"><input type="checkbox" id="autoChk" checked> 自动播放下一句</div>
+
+        <div class="my-card" id="myCard">
+          <div class="mc-flag" id="mcFlag">轮到你说了！</div>
+          <div class="mc-row">
+            <img class="mc-img" id="myImg" alt="">
+            <div class="mc-body">
+              <div class="mc-zh" id="myZh"></div>
+              <div class="mc-hint" id="myHint">先自己说一遍 👄</div>
+              <div class="mc-answer" id="myAnswer"><span id="myEn"></span></div>
+            </div>
+          </div>
+          <div class="mc-actions">
+            <button class="mc-btn reveal" id="btnReveal">点我看答案 🔊</button>
+            <button class="mc-btn said" id="btnSaid">我说对了 ✅</button>
+            <button class="mc-btn again" id="btnAgain">再听一遍 🔁</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script src="story-data.js?v=20261016e"></script>
+<script src="chars.js?v=20261016e"></script>
+<script src="story-app.js?v=20261016e"></script>
+</body>
+</html>

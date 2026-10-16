@@ -1,0 +1,28 @@
+# ===== 开发/构建脚本（非 App 运行时，不入库） =====
+audio-gen/
+fix-*.js
+gen-narr.js
+rename-family.js
+new-units.js
+fix-diff.js
+test-flow.js
+server.js
+narr-worker.py
+narr-samples.html
+voice-samples*.html
+
+# ===== 调试音频 =====
+*_dbg_*.mp3
+.dbg_*.mp3
+
+# ===== 日志 =====
+*.log
+
+# ===== 散落的非运行时图片（角色立绘统一放在 assets/ 内） =====
+乐美公主.jpeg
+诗雅.png
+爱心萌可.jpeg
+
+# ===== 系统/编辑器文件 =====
+.DS_Store
+Thumbs.db

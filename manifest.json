@@ -1,0 +1,19 @@
+{
+  "name": "开口说英语",
+  "short_name": "说英语",
+  "description": "看中文说英文，6-8 岁儿童英语口语启蒙",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFF9F5",
+  "theme_color": "#FFB7B2",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFE3EC"/>
+      <stop offset="100%" stop-color="#FFC7DC"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B5D8EB"/>
+      <stop offset="100%" stop-color="#8FC4DF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 圆角底 -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- 小星星装饰 -->
+  <text x="70" y="105" font-size="46" fill="#FFC93C">★</text>
+  <text x="395" y="92" font-size="34" fill="#FFC93C">★</text>
+  <text x="410" y="410" font-size="40" fill="#FFC93C">★</text>
+  <text x="58" y="418" font-size="30" fill="#FF9AA2">★</text>
+
+  <!-- 猫头鹰耳朵 -->
+  <path d="M140 168 L172 96 L214 158 Z" fill="#8FC4DF"/>
+  <path d="M372 168 L340 96 L298 158 Z" fill="#8FC4DF"/>
+
+  <!-- 身体 -->
+  <ellipse cx="256" cy="272" rx="132" ry="142" fill="url(#body)"/>
+
+  <!-- 肚子 -->
+  <ellipse cx="256" cy="312" rx="82" ry="96" fill="#DCEFF8"/>
+
+  <!-- 眼白 -->
+  <circle cx="196" cy="228" r="58" fill="#FFFFFF"/>
+  <circle cx="316" cy="228" r="58" fill="#FFFFFF"/>
+
+  <!-- 眼珠 -->
+  <circle cx="200" cy="232" r="30" fill="#3D3846"/>
+  <circle cx="320" cy="232" r="30" fill="#3D3846"/>
+
+  <!-- 高光 -->
+  <circle cx="210" cy="220" r="11" fill="#FFFFFF"/>
+  <circle cx="330" cy="220" r="11" fill="#FFFFFF"/>
+
+  <!-- 嘴 -->
+  <path d="M256 268 L232 302 L280 302 Z" fill="#FFC24B"/>
+
+  <!-- 腮红 -->
+  <circle cx="152" cy="300" r="20" fill="#FFB7B2" opacity=".72"/>
+  <circle cx="360" cy="300" r="20" fill="#FFB7B2" opacity=".72"/>
+
+  <!-- 脚 -->
+  <path d="M200 408 q-14 26 6 30 q16 3 20 -20 Z" fill="#FFC24B"/>
+  <path d="M312 408 q14 26 -6 30 q-16 3 -20 -20 Z" fill="#FFC24B"/>
+</svg>
